@@ -1,0 +1,25 @@
+name: Run Azure Activity PowerShell Script
+
+# Schedule to run daily at 9:00 AM UTC (adjust the cron expression as needed)
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+
+jobs:
+  run-powershell-script:
+    runs-on: windows-latest
+
+    steps:
+      # Checkout the repository
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      # Run the PowerShell script
+      - name: Execute PowerShell script
+        run: |
+          # Display a message to indicate start
+          Write-Output "Starting Azure Activity Script Execution..."
+          
+          # Execute the script in the repository
+          .\AzureActivityScript.ps1
+        shell: pwsh
