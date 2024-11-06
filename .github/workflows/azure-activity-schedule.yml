@@ -21,5 +21,5 @@ jobs:
           Write-Output "Starting Azure Activity Script Execution..."
           
           # Execute the script in the repository
-          .\AzureActivityScript.ps1
+          .\HelloWorld.ps1
         shell: pwsh
