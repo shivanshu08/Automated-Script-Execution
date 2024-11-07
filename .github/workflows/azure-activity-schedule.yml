@@ -17,6 +17,14 @@ jobs:
         run: New-Item -ItemType Directory -Path Logs -Force
         shell: pwsh
 
+      - name: Execute PowerShell script and save logs
+        run: |
+          $timestamp = Get-Date -Format 'yyyy-MM-dd_HH-mm'
+          $logFile = "./Logs/Logs_$timestamp.txt"
+          Write-Output "Starting Azure Activity Script Execution..." | Out-File -FilePath $logFile -Append
+          .\HelloWorld.ps1 | Out-File -FilePath $logFile -Append
+        shell: pwsh
+
       - name: Commit and push logs
         env:
           SCRIPT_AUTOMATION: ${{ secrets.SCRIPT_AUTOMATION }}
