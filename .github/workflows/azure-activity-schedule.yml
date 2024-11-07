@@ -1,3 +1,5 @@
+name: Run Azure Activity PowerShell Script
+
 on:
   schedule:
     - cron: '0 * * * *'  # Run every hour
