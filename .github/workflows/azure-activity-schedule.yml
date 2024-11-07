@@ -12,11 +12,23 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v3
 
+      - name: Ensure Logs directory exists
+        run: New-Item -ItemType Directory -Path Logs -Force
+        shell: pwsh
+
       - name: Execute PowerShell script and save logs
         run: |
-          New-Item -ItemType Directory -Path Logs -Force
           $timestamp = Get-Date -Format 'yyyy-MM-dd_HH-mm'
           $logFile = "./Logs/Logs_$timestamp.txt"
           Write-Output "Starting Azure Activity Script Execution..." | Out-File -FilePath $logFile -Append
           .\HelloWorld.ps1 | Out-File -FilePath $logFile -Append
+        shell: pwsh
+
+      - name: Commit and push logs
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add Logs/*
+          git commit -m "Add log file for run at $timestamp"
+          git push
         shell: pwsh
