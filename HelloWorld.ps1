@@ -1,11 +1,7 @@
-param (
-    [string]$logFile
-)
+$counter = 0
 
-for ($i = 1; $i -le 10; $i++) {
-    $message = "Hello World!"
-    Write-Output $message
-    Add-Content -Path $logFile -Value $message
+# Loop 5 times
+while ($counter -lt 5) {
+    Write-Host "Hello User!"
+    $counter++
 }
-
-Write-Output "Log file saved to $logFile"
