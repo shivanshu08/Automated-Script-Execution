@@ -1,7 +1,0 @@
-Starting Azure Activity Script Execution...
-Hello User👋
-Hello User👋
-Hello User👋
-Hello User👋
-Hello User👋
-Log file saved to ./Logs//Logs_11-07-2024_18-05-02.txt
