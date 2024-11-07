@@ -1,30 +1,26 @@
 name: Run Azure Activity PowerShell Script
-
 on:
   schedule:
     - cron: '0 * * * *'  # Run every hour
-  workflow_dispatch:  # Allow manual triggering
-
+  workflow_dispatch:     # Allow manual triggering
+ 
 jobs:
   run-powershell-script:
     runs-on: windows-latest
-
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
-
+ 
       - name: Ensure Logs directory exists
         run: New-Item -ItemType Directory -Path Logs -Force
         shell: pwsh
-
-      - name: Execute PowerShell script and save logs
+ 
+      - name: Execute PowerShell script
         run: |
-          $timestamp = Get-Date -Format 'yyyy-MM-dd_HH-mm'
-          $logFile = "./Logs/Logs_$timestamp.txt"
-          Write-Output "Starting Azure Activity Script Execution..." | Out-File -FilePath $logFile -Append
-          .\HelloWorld.ps1 | Out-File -FilePath $logFile -Append
+          Write-Output "Starting Azure Activity Script Execution..."
+          .\HelloWorld.ps1
         shell: pwsh
-
+ 
       - name: Commit and push logs
         env:
           SCRIPT_AUTOMATION: ${{ secrets.SCRIPT_AUTOMATION }}
@@ -32,6 +28,6 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git add Logs/*
-          git commit -m "Add log file for run at $timestamp"
+          git commit -m "Add log file for run at $(Get-Date -Format 'yyyy-MM-dd_HH-mm')"
           git push https://x-access-token:${SCRIPT_AUTOMATION}@github.com/shivanshu08/Automated-Script-Execution.git
         shell: pwsh
