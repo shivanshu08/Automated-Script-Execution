@@ -33,5 +33,5 @@ jobs:
           git config --global user.email "github-actions@github.com"
           git add Logs/*
           git commit -m "Add log file for run at $timestamp"
-          git push https://x-access-token:${{ secrets.SCRIPT_AUTOMATION }}@github.com/shivanshu08/Automated-Script-Execution.git
+          git push https://x-access-token:${SCRIPT_AUTOMATION}@github.com/shivanshu08/Automated-Script-Execution.git
         shell: pwsh
