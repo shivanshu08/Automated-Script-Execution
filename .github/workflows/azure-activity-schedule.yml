@@ -1,27 +1,22 @@
 name: Run Azure Activity PowerShell Script
 
-# Schedule to run every 1 hour
 on:
   schedule:
-    - cron: '0 * * * *'  # Runs every hour on the hour
-  workflow_dispatch:  # Allows manual triggering of the workflow
+    - cron: '0 * * * *'
+  workflow_dispatch:
 
 jobs:
   run-powershell-script:
     runs-on: windows-latest
     steps:
-      # Checkout the repository
       - name: Check out repository
         uses: actions/checkout@v3
 
-      # Run the PowerShell script and save output to a log file in the root of the repository
       - name: Execute PowerShell script and save logs
         run: |
-          # Generate a log file name with date and time
+          New-Item -ItemType Directory -Path Logs -Force
           $timestamp = Get-Date -Format 'yyyy-MM-dd_HH-mm'
-          $logFile = "Log_$timestamp.txt"
-          # Display a message to indicate start and save to log file
+          $logFile = "./Logs/Logs_$timestamp.txt"
           Write-Output "Starting Azure Activity Script Execution..." | Out-File -FilePath $logFile -Append
-          # Execute the script and capture its output in the log file
           .\HelloWorld.ps1 | Out-File -FilePath $logFile -Append
         shell: pwsh
