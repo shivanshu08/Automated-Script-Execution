@@ -8,6 +8,4 @@ for ($i = 1; $i -le 10; $i++) {
     Add-Content -Path $logFileName -Value $message
 }
 
-Write-Output "Log file saved to $logFileName"
-
-name: Run Azure Activity PowerShell Script
+Write-Output "Log file saved to $logFileName
