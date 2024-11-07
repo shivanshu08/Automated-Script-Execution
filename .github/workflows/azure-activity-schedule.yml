@@ -14,13 +14,22 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v3
 
-      # Run the PowerShell script and save logs
+      # Ensure the Logs directory exists
+      - name: Create Logs directory if not exists
+        run: |
+          if (!(Test-Path -Path "Logs")) {
+            New-Item -ItemType Directory -Path "Logs"
+          }
+        shell: pwsh
+
+      # Run the PowerShell script and save output to a log file in the Logs folder
       - name: Execute PowerShell script and save logs
         run: |
-          # Define log file name with date and time
-          $logFile = "$(pwd)/Logs/Log_$(Get-Date -Format 'dd-MM-yyyy_HH-mm').log"
-          # Display a message to indicate start
+          # Generate a log file name with date and time
+          $timestamp = Get-Date -Format 'yyyy-MM-dd_HH-mm'
+          $logFile = "Logs/Log_$timestamp.txt"
+          # Display a message to indicate start and save to log file
           Write-Output "Starting Azure Activity Script Execution..." | Out-File -FilePath $logFile -Append
-          # Execute the script and save the output to the log file
+          # Execute the script and capture its output in the log file
           .\HelloWorld.ps1 | Out-File -FilePath $logFile -Append
         shell: pwsh
